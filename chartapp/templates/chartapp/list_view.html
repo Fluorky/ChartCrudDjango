@@ -1,0 +1,17 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>LIST</h1>
+<div class="main">
+ 
+    {% for data in dataset %}
+    ID: {{ data.id }}<br/>
+    Category: {{ data.category }}<br/>
+    Number of products {{ data.num_of_products }}<br/>
+    <hr/>
+ 
+    {% endfor %}
+ 
+</div>
+{% endblock %}
