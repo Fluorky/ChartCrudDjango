@@ -1,32 +1,15 @@
 {% extends 'partials/base.html' %}
-
-
+ 
 {% block content %}
 <head>
-   <meta http-equiv="Refresh" content="5">
+  <!--<meta http-equiv="Refresh" content="5">-->
 </head>
-   <!--<div class="row mt-5">
-        <div class="col-md-4 mt-2">
-            <h4>Add Data</h4>
-            <hr>
-
-            <form action="" method="POST">
-                {% csrf_token %}
-
-                {{ form }}
-
-                <input class="btn btn-success mt-2" type="submit" value="Add Data">
-
-            </form>
-          
-
-        </div>-->
       
         <div class="row mt-5">
-        <div class="col-md-4 mt-2">
-            <h4>List</h4>
+        <div class="col-md-4 mt-2" id="test">
+         <h4>List</h4>
             <hr>
- 
+          
         {% for data in products %}
         ID: {{ data.id }}<br/>
         Category: {{ data.category }}<br/>
@@ -34,28 +17,31 @@
         <hr/>
  
         {% endfor %}
+        
+    </div>
+  <div id="container" style="width: 50%;">
+    <canvas id="products-chart" data-url="{% url 'products-chart' %}"></canvas>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    $(function () {
+      var $productsChart = $("#products-chart");
+      $.ajax({
+        url: $productsChart.data("url"),
+        success: function (data) {
  
-</div>
-
-        <div class="col-md-8">
-            <canvas id="myChart" width="400" height="250"></canvas>
-                <script>
-              /*function test(){
-                    if(window.myCharts!= null)
-                   {
-                    window.myCharts.destroy();
-                        
-                   }   */
-                var ctx = document.getElementById('myChart').getContext('2d');
-                window.myCharts = new Chart(ctx, {
-                    type: 'bar',
-                    responsive : true,
-                    data: {
-                        labels: [{% for product in products %}  '{{ product.category }}',  {% endfor %}],
-                        datasets: [{
-                            label: '# of Products',
-                            data: [{% for product in products %}  {{ product.num_of_products }},  {% endfor %}],
-                            backgroundColor: [
+          var ctx = $productsChart[0].getContext("2d");
+ 
+          var productsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Products',
+                backgroundColor: '#6fae3f',
+                data: data.data,
+                backgroundColor: [
                                 'rgba(255, 99, 132, 0.8)',
                                 'rgba(54, 162, 235, 0.8)',
                                 'rgba(255, 206, 86, 0.8)',
@@ -75,27 +61,68 @@
 
                             ],
                             borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        
-                        scales: {
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              scales: {
                             y: {
                                 beginAtZero: true
                             }
+                        },
+              title: {
+                display: false,
+                text: 'Products Bar Chart'
+              }
+            }
+          });
+          
+         setInterval(function(){
+                    $.ajax({
+                        url:'autoupdate',
+                        success: function(test){
+                          productsChart.data.datasets[0].data = test.data;
+                          productsChart.data.labels = test.labels;
+                          productsChart.update();
+
+                     
+                          var stri = "<h4>List</h4><hr>";
+                  
+                          test.id.forEach((num1, index) => {
+                              const num2 = test.data[index];
+                              const num3 = test.labels[index];
+                              stri= stri + "Id: "+ num1 + "<br>" + "Category: " + num3+ "<br>" + "Number of products: " + num2 + "<br><hr>";
+                              //console.log(num1, num2, num3);
+                          });
+                   
+                          //test.id
+                          //console.log(test.id)
+                          
+                            /*for(i=0;i < id.length || i < category.length ||i < numOfProducs.length  ;i++){
+                                console.log(id[i] + '----' + xp[i] + '----' + xo[i])
+                            }*/
+                          $('#test').html(stri);
+                        
                         }
-                    }
-                }); 
-           // }
-                
-            //test();
-              // window.setInterval( test, 5000);
-              // window.myCharts.reload();
+                        
+                       
+                        
+                    });
+                }, 5000);
+
+                   
+            
              
-                </script>
-        </div>
-    </div>
-
-
-
+      
+       }
+      });
+      
+    });
+    
+ 
+  
+  </script>
 {% endblock %}

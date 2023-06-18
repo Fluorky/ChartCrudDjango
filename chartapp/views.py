@@ -1,8 +1,18 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect,get_object_or_404,HttpResponseRedirect
 from . models import Product
 from . forms import ProductForm
-
+from django.core import serializers
+from django.db.models import Sum
 # Create your views here.
+
+def home(request):
+    products = Product.objects.all()
+    context = {
+        "products": products,
+       # "form": form
+    }
+    return render(request, 'chartapp/home.html',context)
 
 def chart(request):
     products = Product.objects.all()
@@ -19,8 +29,56 @@ def chart(request):
         "products": products,
        # "form": form
     }
+    #SomeModel_json = serializers.serialize("json", Product.objects.all())
+    #data = {"xD": SomeModel_json}
+    #return JsonResponse(data)
 
-    return render(request, 'chartapp/index.html', context)
+    #return render(request, 'chartapp/index.html', context)
+    return render(request, 'chartapp/ind.html', context)
+
+def chartJson(request):
+    products = Product.objects.all()
+
+   # if request.method == 'POST':
+   #     form = ProductForm(request.POST)
+   #     if form.is_valid():
+   #         form.save()
+   #         return redirect('index')
+   # else:
+   #     form = ProductForm()        
+
+    context = {
+        "products": products,
+       # "form": form
+    }
+    SomeModel_json = serializers.serialize("json", Product.objects.all())
+    data = {"xD": SomeModel_json}
+    return JsonResponse(data)
+
+    
+   
+def products_chart(request):
+    id = []
+    labels = []
+    data = []
+
+    
+    #queryset = Product.objects.values('category').annotate(num_of_products=Sum('num_of_products'))#.order_by('-num_of_products') 
+    q=Product.objects.values_list('category').values()
+    for entry in q:
+       
+        id.append(entry['id'])
+        labels.append(entry['category'])
+        data.append(entry['num_of_products'])
+        
+     
+    return JsonResponse(data={
+        'id': id,
+        'labels': labels,
+        'data': data,
+    })
+
+    
 
 def addData(request):
     products = Product.objects.all()
