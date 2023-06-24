@@ -1,0 +1,23 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>LIST</h1>
+<div class="main">
+
+    
+    
+    
+ 
+    {% for data in dataset %}
+    ID: {{ data.id }}<br/>
+    Date: {{ data.date_of_event }}<br/>
+    Log message: {{data.logString}}<br/>
+    Event type: {{ data.event_Type}}<br/>
+    
+    <hr/>
+ 
+    {% endfor %}
+ 
+</div>
+{% endblock %}

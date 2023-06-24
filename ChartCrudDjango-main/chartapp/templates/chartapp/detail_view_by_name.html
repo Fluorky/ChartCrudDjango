@@ -1,0 +1,19 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>DETAILS BY NAME</h1>
+<div class="main">
+     
+    {% for dat in data %}
+    <!-- Specify fields to be displayed -->
+    ID: {{ dat.id }}<br/>
+    Category: {{ dat.category }}<br/>
+    Full name of cateogry : {{dat.full_category_name}}<br/>
+    Number of products {{ dat.num_of_products }}<br/>
+    Date:  {{ dat.date_of_last_one }}<br/>
+    {% endfor %}
+ 
+</div>
+
+{% endblock %}

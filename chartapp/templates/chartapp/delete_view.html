@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>DELETE</h1>
+<div class="main">
+    <!-- Create a Form -->
+    <form method="POST">
+    <!-- <form method="DELETE"> It's not correct, but it works -->
+        <!-- Security token by Django -->
+        {% csrf_token %}
+        Are you want to delete this item ?
+        <input type="submit" value="Yes" />
+        <a href="/">Cancel </a>
+    </form>
+</div>
+
+{% endblock %}

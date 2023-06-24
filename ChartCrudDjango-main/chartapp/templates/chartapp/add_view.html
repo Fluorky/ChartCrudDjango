@@ -1,0 +1,25 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<head>
+
+<div class="row mt-5">
+    <div class="col-md-4 mt-2">
+        <h4>Add Data</h4>
+        <hr>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            {{ form }}
+
+            <input class="btn btn-success mt-2" type="submit" value="Add Data">
+
+        </form>
+      
+
+    </div>
+
+</div>
+{% endblock %}
