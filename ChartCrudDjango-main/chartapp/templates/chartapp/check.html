@@ -1,0 +1,24 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+
+
+<div class="row mt-5">
+    <div class="col-md-4 mt-2">
+        <h4>Check Ip</h4>
+        <hr>
+
+        <form method="post">{% csrf_token %}
+            <label for="a">Network ip address (XXX.XXX.XXX.x)</label><br>
+            <input id="a" type="text" name="a" ><br>
+            <label for="a2">Second Network ip address (XXX.XXX.XXX.X)</label><br>
+            <input id="a2" type="text" name="a2" ><br>
+            <input type="submit" value="OK">
+        </form>
+      
+
+    </div>
+
+</div>
+{% endblock %}

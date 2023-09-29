@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+ 
+{% block content %}
+      
+       
+ 
+
+  <div id="container" style="width: 85%;">
+    <canvas  class="line-chart"></canvas>
+    <div  id="clock" style="text-align: center; font-size: 24px; margin-top: 20px; ">
+      
+      </div>
+  </div>
+  <div>
+
+    <h3 style="text-align: center;">Chart JS Bar and Line Mixed Chart </h3>
+    <div>
+        <canvas id="mixedChartID"></canvas>
+    </div>
+</div>
+   <div>
+<script>
+     var mychart = document.getElementById("mixedChartID").getContext("2d");
+     
+    new Chart(mychart, {
+        type: 'bar',   
+        title: {
+            text: "Hourly line speed"
+        },            
+        data: {
+            datasets: [{
+                label: 'Ilosc',
+                data: [750,650,800,684,881,900,658,748,584,684,885,987,900,658,669,445,845],
+                type: 'bar',
+                borderColor:"blue",                    
+                borderWidth:2                    
+                }, {
+                label: 'Predkosc 1',
+                data: [980,950,980,980,980,980,980,980,980,840,840,840,840,840,840,840,840],
+                type: 'line',    
+                borderColor:"green"                                        
+               },
+               {
+                label: 'Predkosc 2',
+                data: [850,820,950,950,950,950,950,950,950,810,810,810,810,810,810,810,810],
+                type: 'line',    
+                borderColor:"yellow"                                        
+               },
+               {
+                label: 'Predkosc 3',
+                data: [1000,980,980,980,980,980,980,980,980,860,860,860,860,840,840,840,840],
+                type: 'line',    
+                borderColor:"red"                                        
+               },
+               
+            ],//end data sets
+            labels: ['07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+        }//end data            
+    });
+</script>
+<div class="row mt-5">
+  <div class="col-md-4 mt-2" id="test">
+   <h4>List</h4>
+      <hr>
+    
+  {% for data in products %}
+  ID: {{ data.id }}<br/>
+  Category: {{ data.category }}<br/>
+  Number of products {{ data.num_of_products }}<br/>
+  Date {{ data.date_of_last_one }}<br/>
+
+  <hr/>
+
+  {% endfor %}
+  
+  
+</div>
+{% endblock %}
+
+ 
+ 

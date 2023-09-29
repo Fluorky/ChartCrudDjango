@@ -1,0 +1,77 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>LOGS LIST</h1>
+<div class="main" id="logs">
+
+ 
+    {% for data in dataset %}
+    ID: {{ data.id }}<br/>
+    Date: {{ data.date_of_event }}<br/>
+    Log message: {{data.logString}}<br/>
+    Event type: {{ data.event_Type}}<br/>
+    Product ID : {{data.product_id}}<br/>
+    Ip : {{data.ip}}</br>
+    
+    <hr/>
+ 
+    {% endfor %}
+
+
+    
+ 
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  $(function () {
+    setInterval(function(){
+                    $.ajax({
+                        url:'logsupdate',
+                        success: function(test){
+                          //productsChart.data.datasets[0].data = test.data;
+                          //productsChart.data.labels = test.labels;
+                          //productsChart.data.labels= test.full_category_name;
+                         // productsChart.update();
+
+
+       
+                     
+                          var stri = "<hr>";
+                          //console.log(typeof(test))
+                          //reverse logs
+                          test.id.forEach((num1, index) => {
+                              const idik = test.id[test.id.length - 1 - index];
+                              const num2 = test.date_of_event[test.id.length - 1 - index];
+                              const num3 = test.logString[test.id.length - 1 - index];
+                              const num5 = test.product_id[test.id.length - 1 - index];
+                              const num4 = test.event_Type[test.id.length - 1 - index];
+                              const num6 = test.ip[test.id.length - 1 - index];
+                              stri= stri + "Id: "+ idik +"<br>Date: " + num2+"<br>Log string: " + num3 + "<br>";
+                              stri = stri + "EventType "+num4+ "<br>Product Id: " + num5+"<br>IP:"+num6+"<br><hr>"
+                              //console.log(num1, num2, num3);
+                          });
+                   
+                          //test.id
+                          //console.log(test.id)
+                          
+                            /*for(i=0;i < id.length || i < category.length ||i < numOfProducs.length  ;i++){
+                                console.log(id[i] + '----' + xp[i] + '----' + xo[i])
+                            }*/
+                          $('#logs').html(stri);
+                        
+                        }
+                        
+                       
+                        
+                    });
+                }, 5000);
+
+                   
+            
+             
+      
+       });
+</script>
+{% endblock %}

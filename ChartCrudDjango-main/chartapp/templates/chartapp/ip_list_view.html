@@ -1,0 +1,71 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+<h1>HOSTS LIST</h1>
+<h4>Check Ip</h4>
+
+
+<div class="main" id="logs">
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  $(function () {
+    setInterval(function(){
+                    $.ajax({
+                        url:'pingsupdate',
+                        success: function(test){
+                          //productsChart.data.datasets[0].data = test.data;
+                          //productsChart.data.labels = test.labels;
+                          //productsChart.data.labels= test.full_category_name;
+                         // productsChart.update();
+
+
+       
+                     
+                          var stri = "<hr>";
+                          //console.log(typeof(test))
+                          //reverse logs
+                          test.id.forEach((num1, index) => {
+                              const idik = test.id[test.id.length - 1 - index];
+                              const num2 = test.ips[test.id.length - 1 - index];
+                              const num3 = test.testresult[test.id.length - 1 - index];
+                              var light="🔵";
+                              if (num3 == "Work")
+                                light = "🟢";
+                              else if(num3=="Host not response")
+                                light = "🔴";
+                              else if(num3=="DNS Error")
+                                light = "🟡"
+                              
+
+                             
+                              stri= stri + "Id: "+ idik +"<br>IP: " + num2+"<br>Log string: " + num3 + "<br>State: " + light + "<br><hr>";
+                              //stri = stri + "EventType "+num4+ "<br>Product Id: " + num5+"<br><hr>"
+                              //console.log(num1, num2, num3);
+                          });
+                   
+                          //test.id
+                          //console.log(test.id)
+                          
+                            /*for(i=0;i < id.length || i < category.length ||i < numOfProducs.length  ;i++){
+                                console.log(id[i] + '----' + xp[i] + '----' + xo[i])
+                            }*/
+                          $('#logs').html(stri);
+                        
+                        }
+                        
+                       
+                        
+                    });
+                }, 60000);
+
+                   
+            
+             
+      
+       });
+</script>
+{% endblock %}

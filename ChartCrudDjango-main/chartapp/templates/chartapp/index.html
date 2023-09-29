@@ -1,0 +1,176 @@
+{% extends 'partials/base.html' %}
+ 
+{% block content %}
+<head>
+  <!--<meta http-equiv="Refresh" content="5">-->
+</head>
+      
+        <div class="row mt-5">
+        <div class="col-md-4 mt-2" id="test">
+         <h4>List</h4>
+            <hr>
+          
+        {% for data in products %}
+        ID: {{ data.id }}<br/>
+        Category: {{ data.category }}<br/>
+        Number of products {{ data.num_of_products }}<br/>
+        Date {{ data.date_of_last_one }}<br/>
+
+        <hr/>
+ 
+        {% endfor %}
+        
+        
+    </div>
+ 
+
+  <div id="container" style="width: 60%;">
+    <canvas id="products-chart" data-url="{% url 'products-chart' %}"></canvas>
+    <div  id="clock" style="text-align: center; font-size: 24px; margin-top: 20px; ">
+      
+      </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    $(function () {
+      var $productsChart = $("#products-chart");
+      $.ajax({
+        url: $productsChart.data("url"),
+        success: function (data) {
+ 
+          var ctx = $productsChart[0].getContext("2d");
+ 
+          var productsChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: '# of Tacts',
+                backgroundColor: '#6fae3f',
+                data: data.data,
+                backgroundColor: [
+                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                                'rgba(255, 159, 64, 0.8)',
+                                'rgba(240, 120, 50, 0.8)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(240, 120, 50, 1)',
+
+                            ],
+                            borderWidth: 2
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+              title: {
+                display: true,
+                text: 'Products Bar Chart'
+              }
+            }
+          });
+          
+         setInterval(function(){
+                    $.ajax({
+                        url:'autoupdate',
+                        success: function(test){
+                          productsChart.data.datasets[0].data = test.data;
+                          productsChart.data.labels = test.labels;
+                          //productsChart.data.labels= test.full_category_name;
+                          productsChart.update();
+
+                     
+                          var stri = "<h4>List</h4><hr>";
+                  
+                          test.id.forEach((num1, index) => {
+                              const num2 = test.data[index];
+                              const num3 = test.labels[index];
+                              const num4 = test.full_category_name[index];
+                              const num5 = test.date_of_last_one[index];
+                              stri= stri + "Id: "+ num1 +"<br>Category: " + num3+"<br>Number of products: " + num2 + "<br>";
+                              stri = stri + "Full category name: "+num4+ "<br>Date of last one: " + num5+"<br><hr>"
+                              //console.log(num1, num2, num3);
+                          });
+                   
+                          //test.id
+                          //console.log(test.id)
+                          
+                            /*for(i=0;i < id.length || i < category.length ||i < numOfProducs.length  ;i++){
+                                console.log(id[i] + '----' + xp[i] + '----' + xo[i])
+                            }*/
+                          $('#test').html(stri);
+                        
+                        }
+                        
+                       
+                        
+                    });
+                }, 5000);
+
+
+        
+                setInterval(function(){
+
+                var currentTime = new Date();
+                var hours = currentTime.getHours();
+                var minutes = currentTime.getMinutes();
+                var seconds = currentTime.getSeconds();
+
+                minutes = (minutes < 10 ? "0" : "") + minutes;
+                seconds = (seconds < 10 ? "0" : "") + seconds;
+                hours = (hours < 10 ? "0" : "") + hours;
+
+                var day = currentTime.getDay();
+                var date = currentTime.getDate();
+                var month = currentTime.getMonth();
+                var year = currentTime.getFullYear();
+                const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+                let namedMonth = monthNames[month];
+                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday",];
+                let namedDay = dayNames[day];
+                var currentTimeString = hours + ":" + minutes + ":" + seconds;
+                currentTimeString= currentTimeString+ "<br> Today is " + namedDay + " " + date +" " + namedMonth + " " + year; 
+                $("#clock").html(currentTimeString);
+
+                },1000);
+
+                   
+            
+             
+      
+       }
+      });
+      
+    });
+
+
+
+
+                   
+            
+             
+    
+    
+ 
+  
+  </script>
+{% endblock %}
