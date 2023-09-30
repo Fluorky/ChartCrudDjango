@@ -2,3 +2,5 @@ django
 pylint
 autopep8
 pytz
+python-dotenv
+pymodbus

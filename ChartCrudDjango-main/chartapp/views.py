@@ -41,12 +41,7 @@ def home(request):
 
 def mock_chart(request):
     data = Example_Data.objects.all()
-    #hours = ['07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
-    #quantity =  [750,650,800,684,881,900,658,748,584,684,885,987,900,658,669,445,845]
-    #line1 = [980,950,980,980,980,980,980,980,980,840,840,840,840,840,840,840,840]
-    #line2 = [850,820,950,950,950,950,950,950,950,810,810,810,810,810,810,810,810]
-    #line3 = [1000,980,980,980,980,980,980,980,980,860,860,860,860,840,840,840,840]
-   
+
     context = {
         "hours": data.model.hours,
         "quantity" : data.model.quantity,
@@ -147,31 +142,22 @@ def addOne(request,id):
     return render(request, "chartapp/update_view.html", context)    
 
 def list_view(request):
-    # dictionary for initial data with
-    # field names as keys
+
     context ={}
- 
-    # add the dictionary during initialization
     context["dataset"] = Product.objects.all()
          
     return render(request, "chartapp/list_view.html", context)
 
 def detail_view_by_name(request, category):
-    # dictionary for initial data with
-    # field names as keys
-    context ={}
  
-    # add the dictionary during initialization
+    context ={}
     context["data"] = Product.objects.filter(category=category)
          
     return render(request, "chartapp/detail_view_by_name.html", context)
 def detail_view(request, id):
-    # dictionary for initial data with
-    # field names as keys
-    context ={}
- 
-    # add the dictionary during initialization
-   
+
+
+    context ={}   
     context["data"] = Product.objects.get(id = id)
          
     return render(request, "chartapp/detail_view.html", context)
@@ -203,7 +189,7 @@ def update_view(request, id):
 
 
 def resetOne(request,id):
-    #this 
+    
     context ={}
 
     obj = get_object_or_404(Product, id = id)
@@ -338,7 +324,7 @@ def ip_scanner(request):
         #addr = input("Write 3 first octets ip addres like XXX.XXX.XXX. : ")
         #a = input("Write start scanning adres between 1 and 255: ")
         #b = input("Write end scanning adres between 1 and 255: ")
-        #addr = "10.206.5."
+        
     # a = 1
         #b = 5
         #file = "Documents/python/pingHosts.txt"
