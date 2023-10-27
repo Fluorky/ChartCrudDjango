@@ -6,6 +6,7 @@ __pycache__
 db.sqlite3
 media
 .ds_store
+*.sqlite3
 # Backup files # 
 *.bak 
 
