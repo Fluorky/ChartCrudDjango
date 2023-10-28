@@ -17,11 +17,12 @@ PoC Chart App in python using django framework with this functionalities:
 1. git clone https://github.com/Fluorky/ChartCrudDjango
 2. Go to ChartCrundDjango-main folder
 3. Create and run virual venv using these commands in cmd 
- Windows
+
+## Windows
 py -3 -m venv venv
 .\\venv\\Scripts\\activate
 
- macOS or Linux
+## macOS or Linux
 python3 -m venv venv
 source ./venv/bin/activate
 
