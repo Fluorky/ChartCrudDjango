@@ -58,22 +58,7 @@
         }//end data            
     });
 </script>
-<div class="row mt-5">
-  <div class="col-md-4 mt-2" id="test">
-   <h4>List</h4>
-      <hr>
-    
-  {% for data in products %}
-  ID: {{ data.id }}<br/>
-  Category: {{ data.category }}<br/>
-  Number of products {{ data.num_of_products }}<br/>
-  Date {{ data.date_of_last_one }}<br/>
 
-  <hr/>
-
-  {% endfor %}
-  
-  
 </div>
 {% endblock %}
 
