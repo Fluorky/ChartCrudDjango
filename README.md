@@ -26,10 +26,10 @@ py -3 -m venv venv
 python3 -m venv venv
 source ./venv/bin/activate
 
-4. Use this command to create sqlite database from model
-python manage.py migrate
-5. Use this command to install requirements packages
+4.  Use this command to install requirements packages
 pip install -r requirements.txt
+5. Use this command to create sqlite database from model
+python manage.py migrate
 6. To run app write in cmd
 python manage.py runserver 0.0.0.0:8000 
 7. Open this address yourIPAdress:8000 in browser
