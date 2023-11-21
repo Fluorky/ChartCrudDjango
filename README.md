@@ -12,6 +12,8 @@ PoC Chart App in python using django framework with this functionalities:
 
 *Realtime Modbus sensors dashborad,
 
+*JSON responses
+
 
 # To run this app:
 1. git clone https://github.com/Fluorky/ChartCrudDjango
